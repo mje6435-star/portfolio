@@ -14,12 +14,9 @@
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   /* ------------------------------ Langue ------------------------------ */
-  const SUPPORTED = ['fr', 'en'];
-  let lang = 'fr';
-  try {
-    const saved = localStorage.getItem('portfolio-lang');
-    if (SUPPORTED.includes(saved)) lang = saved;
-  } catch (_) { /* stockage indisponible : on reste en français */ }
+  // Site affiché en français uniquement (bouton FR/EN retiré). Les textes anglais restent dans
+  // data.js : remettre un choix de langue ici suffirait à les réactiver.
+  const lang = 'fr';
 
   /** Texte traduit : accepte une chaîne ou un objet { fr, en }. */
   const t = (v) => (v && typeof v === 'object' && !Array.isArray(v) ? v[lang] ?? v.fr : v);
@@ -227,15 +224,6 @@
     $$('[data-i18n-title]').forEach((n) => { n.title = tr(n.dataset.i18nTitle); });
   }
 
-  function setLang(next) {
-    if (!SUPPORTED.includes(next) || next === lang) return;
-    lang = next;
-    try { localStorage.setItem('portfolio-lang', lang); } catch (_) { /* ignoré */ }
-    applyI18n();
-    renderAll();
-    if (el.dialog.open && currentProject) renderDialog();
-  }
-
   /* ------------------------------ Fenêtre de détail ------------------------------ */
   function renderDialog() {
     const p = D.projects.find((x) => x.id === currentProject);
@@ -288,8 +276,6 @@
     renderProjects();
     $(`[data-filter="${currentFilter}"]`, el.filters)?.focus({ preventScroll: true });
   });
-
-  $('#lang').addEventListener('click', () => setLang(lang === 'fr' ? 'en' : 'fr'));
 
   /* Menu mobile */
   const nav = $('#nav');

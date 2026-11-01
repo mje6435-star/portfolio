@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Portfolio — logique du site (rendu, langue, fenêtre de détail, animation)
+   Portfolio : logique du site (rendu, langue, fenêtre de détail, animation)
    Le contenu se modifie dans data.js, pas ici.
    ========================================================================== */
 (() => {
@@ -47,6 +47,7 @@
     trophy: '<path d="M8 4.5h8v5a4 4 0 0 1-8 0v-5z"/><path d="M8 6H4.5v1.5A3 3 0 0 0 8 10.5M16 6h3.5v1.5a3 3 0 0 1-3.5 3M12 13.5v4M8.5 20h7"/>',
     database: '<ellipse cx="12" cy="6" rx="7.5" ry="2.8"/><path d="M4.5 6v6c0 1.6 3.4 2.8 7.5 2.8s7.5-1.2 7.5-2.8V6M4.5 12v6c0 1.6 3.4 2.8 7.5 2.8s7.5-1.2 7.5-2.8v-6"/>',
     award: '<circle cx="12" cy="9" r="5.5"/><path d="m9.6 9 1.6 1.6 3.2-3.2"/><path d="m8.4 13.3-1.4 7.2 5-2.6 5 2.6-1.4-7.2"/>',
+    chevron: '<path d="m6 9 6 6 6-6"/>',
   };
   const icon = (name, extra = '') =>
     `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" ${extra}>${ICONS[name] || ICONS.globe}</svg>`;
@@ -161,14 +162,19 @@
     el.certs.innerHTML = D.certifications
       .map((c) => {
         const actions = link(c.verify, 'cert.verify') + link(c.file, 'cert.pdf');
+        // En-tête cliquable (accordéon natif) qui ouvre « Ce que j'ai appris ».
+        const head = `<span class="cert__icon">${icon('award')}</span>
+              <span class="cert__name">${esc(c.title)}</span>
+              <span class="cert__meta">${esc(c.issuer)} · ${esc(t(c.date))}</span>`;
         return `<li class="panel cert">
-          <div class="cert__head">
-            <span class="cert__icon">${icon('award')}</span>
-            <div>
-              <h4>${esc(c.title)}</h4>
-              <p class="cert__meta">${esc(c.issuer)} · ${esc(t(c.date))}</p>
-            </div>
-          </div>
+          ${c.learned
+            ? `<details class="cert__details">
+            <summary class="cert__head">${head}
+              <span class="cert__toggle" aria-hidden="true">${icon('chevron')}</span>
+            </summary>
+            <div class="cert__learned"><strong>${esc(tr('cert.learned'))}</strong><p>${esc(t(c.learned))}</p></div>
+          </details>`
+            : `<div class="cert__head">${head}</div>`}
           <p class="cert__id">${esc(tr('cert.id'))} <code>${esc(c.credentialId)}</code></p>
           ${actions ? `<div class="cert__actions">${actions}</div>` : ''}
         </li>`;
@@ -178,12 +184,7 @@
 
   function renderModules() {
     el.modules.innerHTML = D.modules
-      .map((m) => {
-        const inner = `<span class="module__n">${m.n}</span><span>${esc(t(m.title))}</span>`;
-        return m.project
-          ? `<li><button class="module module--link" type="button" data-open="${m.project}">${inner}</button></li>`
-          : `<li><div class="module">${inner}</div></li>`;
-      })
+      .map((m) => `<li class="module"><span class="module__n">${esc(m.n)}</span><span>${esc(t(m.title))}</span></li>`)
       .join('');
   }
 
@@ -197,6 +198,8 @@
   function renderStats() {
     $('#stat-projects').textContent = D.projects.length;
     $('#stat-modules').textContent = D.modules.length;
+    // Compté dans la section Compétences déjà rendue : reste juste si on ajoute ou retire une compétence.
+    $('#stat-skills').textContent = $$('li', el.skills).length;
   }
 
   function renderAll() {
@@ -401,7 +404,19 @@
     // Couleurs lues dans la palette CSS (:root) : aucune couleur n'est codée ici.
     const css = getComputedStyle(document.documentElement);
     const color = (name) => css.getPropertyValue(name).trim();
-    const C = { accent: color('--blue-light'), node: color('--blue-pale'), light: color('--white') };
+    const C = {
+      accent: color('--blue-light'), node: color('--blue-pale'), light: color('--white'),
+      navy: color('--navy'), blue: color('--blue'),
+    };
+    // Couleur selon la hauteur : claire sur le haut marine, marine léger sur le bas clair du dégradé (--hero-fade).
+    const shade = (top, bottom) => {
+      const fade = parseFloat(getComputedStyle(hero).getPropertyValue('--hero-fade')) || 0;
+      const from = Math.max(0, 1 - (fade * 0.65) / h), to = Math.max(from, 1 - (fade * 0.35) / h);
+      const g = ctx.createLinearGradient(0, 0, 0, h);
+      g.addColorStop(0, top); g.addColorStop(from, top); g.addColorStop(to, bottom); g.addColorStop(1, bottom);
+      return g;
+    };
+    let paint = { line: C.accent, node: C.node, hub: C.accent, light: C.light };
 
     const rand = (a, b) => a + Math.random() * (b - a);
     const dot = (x, y, r, fill, alpha) => {
@@ -417,6 +432,7 @@
       canvas.width = Math.round(w * dpr);
       canvas.height = Math.round(h * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      paint = { line: shade(C.accent, C.navy), node: shade(C.node, C.navy), hub: shade(C.accent, C.blue), light: shade(C.light, C.navy) };
       link = Math.max(105, Math.min(165, w / 8));
       const count = Math.round(Math.min(85, Math.max(26, (w * h) / 17000)));
       nodes = Array.from({ length: count }, () => ({
@@ -451,7 +467,7 @@
           const d2 = dx * dx + dy * dy;
           if (d2 > link * link) continue;
           const k = 1 - Math.sqrt(d2) / link;
-          ctx.globalAlpha = k * 0.5; ctx.strokeStyle = C.accent;
+          ctx.globalAlpha = k * 0.5; ctx.strokeStyle = paint.line;
           ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
           pairs.push(i, j);
         }
@@ -460,7 +476,7 @@
           const d = Math.hypot(dx, dy);
           if (d < link * 1.35) {
             const k = 1 - d / (link * 1.35);
-            ctx.globalAlpha = k * 0.7; ctx.strokeStyle = C.light;
+            ctx.globalAlpha = k * 0.7; ctx.strokeStyle = paint.light;
             ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke();
             if (dt) { a.x -= dx * 0.0009 * dt * 60; a.y -= dy * 0.0009 * dt * 60; }
           }
@@ -469,16 +485,16 @@
 
       for (const n of nodes) {
         if (n.hub) {
-          dot(n.x, n.y, n.r * 4.2, C.accent, 0.18);
-          dot(n.x, n.y, n.r * 1.5, C.accent, 1);
+          dot(n.x, n.y, n.r * 4.2, paint.hub, 0.18);
+          dot(n.x, n.y, n.r * 1.5, paint.hub, 1);
         } else {
-          dot(n.x, n.y, n.r, C.node, 0.75);
+          dot(n.x, n.y, n.r, paint.node, 0.75);
         }
       }
 
       if (mouse.on) {
-        dot(mouse.x, mouse.y, 14, C.light, 0.18);
-        dot(mouse.x, mouse.y, 3, C.light, 1);
+        dot(mouse.x, mouse.y, 14, paint.light, 0.18);
+        dot(mouse.x, mouse.y, 3, paint.light, 1);
       }
 
       // Paquets qui voyagent d'un nœud à un voisin
@@ -496,8 +512,8 @@
         if (p.t >= 1) { packets.splice(i, 1); continue; }
         const x = p.a.x + (p.b.x - p.a.x) * p.t;
         const y = p.a.y + (p.b.y - p.a.y) * p.t;
-        dot(x, y, 7, C.accent, 0.3);
-        dot(x, y, 2.2, C.light, 1);
+        dot(x, y, 7, paint.line, 0.3);
+        dot(x, y, 2.2, paint.light, 1);
       }
       ctx.globalAlpha = 1;
     }

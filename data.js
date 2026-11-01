@@ -1,5 +1,5 @@
 /* ==========================================================================
-   CONTENU DU PORTFOLIO — c'est ici que tu modifies tes textes.
+   CONTENU DU PORTFOLIO : c'est ici que tu modifies tes textes.
 
    - profile   : infos générales (GitHub, LinkedIn, lien vers ton CV…)
    - ui        : textes fixes du site (FR / EN)
@@ -44,14 +44,13 @@ window.PORTFOLIO = {
       "lang.label": "Switch to English",
       "lang.short": "EN",
       "hero.badge": "Recherche un stage en informatique",
-      "hero.title": "Je <span class=\"grad\">construis, j'héberge</span> et j'automatise.",
-      "hero.sub":
-        "<strong>Diogo Vala Alves × IA</strong>, apprenti informaticien CFC · exploitation &amp; infrastructure · site créé avec <a href=\"#certifications\">Claude Code</a>",
+      "hero.title": "My portfolio",
+      "hero.sub": "Diogo Vala Alves & IA",
       "hero.cta1": "Voir mes projets",
       "hero.cta2": "Me contacter",
-      "hero.stat.projects": "projets",
-      "hero.stat.modules": "modules CFC",
-      "hero.stat.since": "CFC depuis 2025",
+      "hero.stat.projects": "Projets",
+      "hero.stat.modules": "Modules CFC",
+      "hero.stat.skills": "Compétences",
       "projects.title": "Projets sélectionnés",
       "projects.lead":
         "Labos d'école, projets perso et petits sites : ce que j'ai construit, testé et documenté.",
@@ -73,6 +72,7 @@ window.PORTFOLIO = {
       "path.modules": "Modules CFC",
       "path.certs": "Certifications",
       "cert.id": "ID de certification",
+      "cert.learned": "Ce que j'ai appris",
       "cert.verify": "Vérifier le badge",
       "cert.pdf": "Voir le PDF",
       "about.title": "À propos",
@@ -114,14 +114,13 @@ window.PORTFOLIO = {
       "lang.label": "Passer en français",
       "lang.short": "FR",
       "hero.badge": "Looking for an IT internship",
-      "hero.title": "I <span class=\"grad\">build, host</span> and automate.",
-      "hero.sub":
-        "<strong>Diogo Vala Alves × AI</strong>, IT apprentice (CFC) · operations &amp; infrastructure · site built with <a href=\"#certifications\">Claude Code</a>",
+      "hero.title": "My portfolio",
+      "hero.sub": "Diogo Vala Alves & IA",
       "hero.cta1": "See my work",
       "hero.cta2": "Get in touch",
-      "hero.stat.projects": "projects",
+      "hero.stat.projects": "Projects",
       "hero.stat.modules": "CFC modules",
-      "hero.stat.since": "CFC since 2025",
+      "hero.stat.skills": "Skills",
       "projects.title": "Selected projects",
       "projects.lead":
         "School labs, personal projects and small sites: what I built, tested and documented.",
@@ -143,6 +142,7 @@ window.PORTFOLIO = {
       "path.modules": "CFC modules",
       "path.certs": "Certifications",
       "cert.id": "Credential ID",
+      "cert.learned": "What I learned",
       "cert.verify": "Verify badge",
       "cert.pdf": "View PDF",
       "about.title": "About me",
@@ -592,27 +592,27 @@ window.PORTFOLIO = {
   ],
 
   /* ------------------------------------------------------------------ */
-  // project : id du projet à ouvrir quand on clique sur le module
+  // Modules CFC, affichés dans cet ordre
   modules: [
-    { n: "106", title: { fr: "Bases de données", en: "Databases" } },
-    { n: "114", title: { fr: "Codage, compression & chiffrement", en: "Encoding, compression & encryption" } },
-    { n: "117", title: { fr: "Infrastructure d'une petite entreprise", en: "Small-business infrastructure" } },
-    { n: "122", title: { fr: "Automatisation par scripts", en: "Scripting & automation" } },
-    { n: "123", title: { fr: "Services d'un serveur", en: "Server services" }, project: "windows-server" },
-    { n: "129", title: { fr: "Réseau : sous-réseaux & routage", en: "Networking: subnets & routing" } },
-    { n: "141", title: { fr: "Installer des bases de données", en: "Installing database systems" } },
-    { n: "143", title: { fr: "Sauvegarde & restauration", en: "Backup & restore" } },
-    { n: "162", title: { fr: "Analyser & modéliser les données", en: "Data analysis & modelling" } },
-    { n: "164", title: { fr: "Créer des bases de données", en: "Creating databases" } },
-    { n: "184", title: { fr: "Sécurité réseau", en: "Network security" }, project: "network-test-plan" },
-    { n: "187", title: { fr: "Poste de travail ICT", en: "ICT workstation" } },
-    { n: "190", title: { fr: "Virtualisation", en: "Virtualisation" }, project: "virtualization-lab" },
-    { n: "216", title: { fr: "IoE / objets connectés", en: "IoE / connected devices" }, project: "weather-lorawan" },
-    { n: "231", title: { fr: "Protection des données", en: "Data protection" } },
-    { n: "254", title: { fr: "Processus métier (BPMN)", en: "Business processes (BPMN)" } },
-    { n: "260", title: { fr: "Bureautique", en: "Office tools" } },
-    { n: "319", title: { fr: "Applications (Python)", en: "Applications (Python)" } },
-    { n: "431", title: { fr: "Mandats autonomes", en: "Autonomous assignments" }, project: "motion-alarm" },
+    { n: "187", title: { fr: "Poste de travail / système d'exploitation", en: "Workstation / operating system" } },
+    { n: "117", title: { fr: "Infrastructure IT d'une petite entreprise", en: "IT infrastructure for a small business" } },
+    { n: "231", title: { fr: "Protection et sécurité des données", en: "Data protection and security" } },
+    { n: "162", title: { fr: "Analyse et modélisation de données", en: "Data analysis and modelling" } },
+    { n: "164", title: { fr: "Création de bases de données", en: "Creating databases" } },
+    { n: "260", title: { fr: "Outils bureautiques (CIE)", en: "Office tools (CIE)" } },
+    { n: "114", title: { fr: "Codification, compression et cryptage", en: "Encoding, compression and encryption" } },
+    { n: "122", title: { fr: "Scripts et macros", en: "Scripts and macros" } },
+    { n: "123", title: { fr: "Services d'un serveur", en: "Server services" } },
+    { n: "129", title: { fr: "Composants réseau", en: "Network components" } },
+    { n: "141", title: { fr: "Installation de systèmes de BD", en: "Installing database systems" } },
+    { n: "143", title: { fr: "Sauvegarde et restauration", en: "Backup and restore" } },
+    { n: "106", title: { fr: "Requêtes et maintenance de BD", en: "Database queries and maintenance" } },
+    { n: "216", title: { fr: "IoT / IoE", en: "IoT / IoE" } },
+    { n: "431", title: { fr: "Mandats informatiques en autonomie", en: "Independent IT assignments" } },
+    { n: "319", title: { fr: "Conception d'applications", en: "Application design" } },
+    { n: "184", title: { fr: "Sécurité réseau", en: "Network security" } },
+    { n: "190", title: { fr: "Virtualisation", en: "Virtualisation" } },
+    { n: "254", title: { fr: "Processus métier", en: "Business processes" } },
   ],
 
   education: [
@@ -674,6 +674,10 @@ window.PORTFOLIO = {
       credentialId: "5ff8b0a6579eeec85c703b45d29fce8b",
       verify: "https://academy.claude.com/verify/5ff8b0a6579eeec85c703b45d29fce8b",
       file: "certificats/claude-academy-badge-claude-code-101.pdf",
+      learned: {
+        fr: "Les bases de Claude Code : l'installer, l'utiliser dans le terminal, lui donner le bon contexte et vérifier les modifications qu'il propose avant de les valider.",
+        en: "The basics of Claude Code: installing it, using it in the terminal, giving it the right context and reviewing its changes before accepting them.",
+      },
     },
     {
       title: "Claude Academy: Claude Code in action",
@@ -682,6 +686,10 @@ window.PORTFOLIO = {
       credentialId: "3b741dcc958c6eec80b206bbad512980",
       verify: "https://academy.claude.com/verify/3b741dcc958c6eec80b206bbad512980",
       file: "certificats/claude-academy-badge-claude-code-in-action-1.pdf",
+      learned: {
+        fr: "Utiliser Claude Code sur de vrais projets : gérer le contexte avec CLAUDE.md, créer des commandes personnalisées, connecter des outils externes (MCP) et l'intégrer à GitHub.",
+        en: "Using Claude Code on real projects: managing context with CLAUDE.md, creating custom commands, connecting external tools (MCP) and integrating it with GitHub.",
+      },
     },
   ],
 

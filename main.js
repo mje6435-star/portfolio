@@ -1,6 +1,6 @@
 /* ==========================================================================
    Portfolio — logique du site (rendu, langue, fenêtre de détail, animation)
-   Le contenu se modifie dans js/data.js, pas ici.
+   Le contenu se modifie dans data.js, pas ici.
    ========================================================================== */
 (() => {
   'use strict';
@@ -46,26 +46,24 @@
     globe: '<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.8 2.5 2.8 14.5 0 17M12 3.5c-2.8 2.5-2.8 14.5 0 17"/>',
     trophy: '<path d="M8 4.5h8v5a4 4 0 0 1-8 0v-5z"/><path d="M8 6H4.5v1.5A3 3 0 0 0 8 10.5M16 6h3.5v1.5a3 3 0 0 1-3.5 3M12 13.5v4M8.5 20h7"/>',
     database: '<ellipse cx="12" cy="6" rx="7.5" ry="2.8"/><path d="M4.5 6v6c0 1.6 3.4 2.8 7.5 2.8s7.5-1.2 7.5-2.8V6M4.5 12v6c0 1.6 3.4 2.8 7.5 2.8s7.5-1.2 7.5-2.8v-6"/>',
+    award: '<circle cx="12" cy="9" r="5.5"/><path d="m9.6 9 1.6 1.6 3.2-3.2"/><path d="m8.4 13.3-1.4 7.2 5-2.6 5 2.6-1.4-7.2"/>',
   };
   const icon = (name, extra = '') =>
     `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" ${extra}>${ICONS[name] || ICONS.globe}</svg>`;
 
-  const SKILL_COLORS = ['#5b8cff', '#38d4ff', '#34e6b4', '#a66bff', '#ffb454', '#ff6bb5'];
-
   /* ------------------------- Couverture d'un projet ------------------------- */
-  /** Illustration générée (dégradé + grille + icône). `uid` évite les doublons d'id SVG. */
+  /** Illustration générée (fond marine + grille + icône), aux couleurs de la palette CSS.
+      `uid` évite les doublons d'id SVG. */
   function coverSVG(p, uid) {
-    const id = `cv-${p.id}-${uid}`;
+    const id = `cover-${p.id}-${uid}`;
     return `<svg viewBox="0 0 640 360" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
       <defs>
-        <linearGradient id="${id}-s" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${p.c1}"/><stop offset="1" stop-color="${p.c2}"/></linearGradient>
-        <radialGradient id="${id}-r" cx=".8" cy=".15" r=".95"><stop offset="0" stop-color="${p.c1}" stop-opacity=".42"/><stop offset="1" stop-color="${p.c1}" stop-opacity="0"/></radialGradient>
-        <radialGradient id="${id}-l" cx=".12" cy="1" r=".8"><stop offset="0" stop-color="${p.c2}" stop-opacity=".3"/><stop offset="1" stop-color="${p.c2}" stop-opacity="0"/></radialGradient>
-        <pattern id="${id}-p" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="#fff" stroke-opacity=".06"/></pattern>
+        <linearGradient id="${id}-s" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:var(--white)"/><stop offset="1" style="stop-color:var(--blue-light)"/></linearGradient>
+        <radialGradient id="${id}-r" cx=".8" cy=".15" r=".95"><stop offset="0" style="stop-color:var(--blue);stop-opacity:.55"/><stop offset="1" style="stop-color:var(--blue);stop-opacity:0"/></radialGradient>
+        <pattern id="${id}-p" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" style="stroke:var(--white)" stroke-opacity=".06"/></pattern>
       </defs>
-      <rect width="640" height="360" fill="#0b121c"/>
+      <rect width="640" height="360" style="fill:var(--navy)"/>
       <rect width="640" height="360" fill="url(#${id}-r)"/>
-      <rect width="640" height="360" fill="url(#${id}-l)"/>
       <rect width="640" height="360" fill="url(#${id}-p)"/>
       <g transform="translate(320 180)"><g class="cover__icon"><g transform="translate(-84 -84) scale(7)" fill="none" stroke="url(#${id}-s)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">${ICONS[p.icon] || ICONS.globe}</g></g></g>
     </svg>`;
@@ -81,6 +79,7 @@
     skills: $('#skills'),
     education: $('#education'),
     work: $('#work'),
+    certs: $('#certs'),
     modules: $('#modules'),
     interests: $('#interests'),
     languages: $('#languages'),
@@ -102,18 +101,15 @@
     }).join('');
   }
 
+  /** Carte compacte : icône + titre. Le détail (image, résumé, tags) est dans la fenêtre. */
   function cardHTML(p, i) {
-    const tags = p.tags.slice(0, 4).map((x) => `<li class="tag">${esc(t(x))}</li>`).join('');
-    return `<article class="card" style="--c1:${p.c1};--c2:${p.c2};--i:${i}" data-cat="${p.cat}">
-      <div class="cover">${coverHTML(p, 'card')}</div>
+    return `<article class="card" style="--i:${i}" data-cat="${p.cat}">
+      <span class="card__icon">${icon(p.icon)}</span>
       <div class="card__body">
         <span class="card__meta">${esc(t(p.meta))}</span>
-        <h3><button class="card__open" type="button" data-open="${p.id}">${esc(t(p.title))}</button></h3>
-        <p class="card__summary">${esc(t(p.summary))}</p>
-        <ul class="tags">${tags}</ul>
-        <span class="card__more" aria-hidden="true">${esc(tr('card.open'))}
-          <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        <h3><button class="card__open" type="button" data-open="${p.id}" title="${esc(tr('card.open'))}">${esc(t(p.title))}</button></h3>
       </div>
+      <span class="card__more" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
     </article>`;
   }
 
@@ -124,9 +120,9 @@
 
   function renderSkills() {
     el.skills.innerHTML = D.skills
-      .map((g, i) => {
+      .map((g) => {
         const items = g.items.map((x) => `<li>${esc(t(x))}</li>`).join('');
-        return `<article class="skill" style="--c1:${SKILL_COLORS[i % SKILL_COLORS.length]}">
+        return `<article class="skill">
           <div class="skill__head"><span class="skill__icon">${icon(g.icon)}</span><h3>${esc(t(g.title))}</h3></div>
           <ul class="chips">${items}</ul>
         </article>`;
@@ -135,12 +131,15 @@
   }
 
   function renderTimeline() {
+    const pointsHTML = (points) => `<ul>${t(points).map((x) => `<li>${esc(x)}</li>`).join('')}</ul>`;
+
     el.education.innerHTML = D.education
       .map(
         (e) => `<li>
           <span class="timeline__period">${esc(t(e.period))}</span>
           <h4>${esc(t(e.title))}</h4>
           <p class="timeline__place">${esc(t(e.place))}</p>
+          ${e.points ? pointsHTML(e.points) : ''}
         </li>`
       )
       .join('');
@@ -150,9 +149,30 @@
         (w) => `<li>
           <span class="timeline__period">${esc(t(w.period))}</span>
           <h4>${esc(t(w.title))}</h4>
-          <ul>${t(w.points).map((x) => `<li>${esc(x)}</li>`).join('')}</ul>
+          ${pointsHTML(w.points)}
         </li>`
       )
+      .join('');
+  }
+
+  function renderCerts() {
+    const link = (href, key) =>
+      href ? `<a class="btn btn--ghost" href="${esc(href)}" target="_blank" rel="noopener">${esc(tr(key))}</a>` : '';
+    el.certs.innerHTML = D.certifications
+      .map((c) => {
+        const actions = link(c.verify, 'cert.verify') + link(c.file, 'cert.pdf');
+        return `<li class="panel cert">
+          <div class="cert__head">
+            <span class="cert__icon">${icon('award')}</span>
+            <div>
+              <h4>${esc(c.title)}</h4>
+              <p class="cert__meta">${esc(c.issuer)} · ${esc(t(c.date))}</p>
+            </div>
+          </div>
+          <p class="cert__id">${esc(tr('cert.id'))} <code>${esc(c.credentialId)}</code></p>
+          ${actions ? `<div class="cert__actions">${actions}</div>` : ''}
+        </li>`;
+      })
       .join('');
   }
 
@@ -161,7 +181,7 @@
       .map((m) => {
         const inner = `<span class="module__n">${m.n}</span><span>${esc(t(m.title))}</span>`;
         return m.project
-          ? `<li><button class="module module--link" type="button" data-open="${m.project}">${inner}<span class="module__dot" aria-hidden="true"></span></button></li>`
+          ? `<li><button class="module module--link" type="button" data-open="${m.project}">${inner}</button></li>`
           : `<li><div class="module">${inner}</div></li>`;
       })
       .join('');
@@ -170,7 +190,7 @@
   function renderAbout() {
     el.interests.innerHTML = D.interests.map((x) => `<li>${esc(t(x))}</li>`).join('');
     el.languages.innerHTML = D.languages
-      .map((l) => `<div><dt>${esc(t(l.name))}</dt><dd>${esc(t(l.level))}</dd></div>`)
+      .map((l) => `<div><dt>${esc(t(l.name))}${esc(tr('about.colon'))}</dt><dd>${esc(t(l.level))}</dd></div>`)
       .join('');
   }
 
@@ -184,6 +204,7 @@
     renderProjects();
     renderSkills();
     renderTimeline();
+    renderCerts();
     renderModules();
     renderAbout();
     renderStats();
@@ -201,6 +222,7 @@
     $$('[data-i18n]').forEach((n) => { n.textContent = tr(n.dataset.i18n); });
     $$('[data-i18n-html]').forEach((n) => { n.innerHTML = tr(n.dataset.i18nHtml); });
     $$('[data-i18n-label]').forEach((n) => { n.setAttribute('aria-label', tr(n.dataset.i18nLabel)); });
+    $$('[data-i18n-title]').forEach((n) => { n.title = tr(n.dataset.i18nTitle); });
   }
 
   function setLang(next) {
@@ -227,7 +249,7 @@
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
       </button>
       <div class="cover">${coverHTML(p, 'dlg')}</div>
-      <div class="dialog__content" style="--c1:${p.c1};--c2:${p.c2}">
+      <div class="dialog__content">
         <span class="card__meta">${esc(t(p.meta))}</span>
         <h2 id="dialog-title">${esc(t(p.title))}</h2>
         <p class="dialog__summary">${esc(t(p.summary))}</p>
@@ -344,15 +366,21 @@
     }, 2200);
   });
 
-  const cvBtn = $('#cv-btn');
+  /* ------------------------------ CV ------------------------------ */
+  // Aperçu intégré + téléchargement. Sur mobile, l'aperçu est masqué (CSS) : « Ouvrir le CV » prend le relais.
   if (D.profile.cv) {
-    cvBtn.href = D.profile.cv;
-    cvBtn.setAttribute('download', '');
-    cvBtn.hidden = false;
+    $('#cv-frame').src = `${D.profile.cv}#view=FitH`;
+    $('#cv-download').href = D.profile.cv;
+    $('#cv-open').href = D.profile.cv;
+  } else {
+    $('#cv').hidden = true;
+    $('a[href="#cv"]', nav).hidden = true;
   }
-  const socials = [['GitHub', D.profile.github], ['LinkedIn', D.profile.linkedin]].filter(([, url]) => url);
+  // Le pseudo GitHub est repris de l'URL pour rester lisible : « GitHub · pseudo ».
+  const githubUser = (D.profile.github || '').split('/').filter(Boolean).pop();
+  const socials = [['GitHub · ' + githubUser, D.profile.github], ['LinkedIn', D.profile.linkedin]].filter(([, url]) => url);
   el.social.innerHTML = socials
-    .map(([name, url]) => `<li><a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${name}</a></li>`)
+    .map(([name, url]) => `<li><a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(name)}</a></li>`)
     .join('');
 
   /* ------------------------------ Animation du hero ------------------------------ */
@@ -370,7 +398,16 @@
     let inView = true;
     const mouse = { x: 0, y: 0, on: false };
 
+    // Couleurs lues dans la palette CSS (:root) : aucune couleur n'est codée ici.
+    const css = getComputedStyle(document.documentElement);
+    const color = (name) => css.getPropertyValue(name).trim();
+    const C = { accent: color('--blue-light'), node: color('--blue-pale'), light: color('--white') };
+
     const rand = (a, b) => a + Math.random() * (b - a);
+    const dot = (x, y, r, fill, alpha) => {
+      ctx.globalAlpha = alpha; ctx.fillStyle = fill;
+      ctx.beginPath(); ctx.arc(x, y, r, 0, 6.2832); ctx.fill();
+    };
 
     function resize() {
       const r = canvas.getBoundingClientRect();
@@ -414,7 +451,7 @@
           const d2 = dx * dx + dy * dy;
           if (d2 > link * link) continue;
           const k = 1 - Math.sqrt(d2) / link;
-          ctx.strokeStyle = `rgba(91,140,255,${(k * 0.5).toFixed(3)})`;
+          ctx.globalAlpha = k * 0.5; ctx.strokeStyle = C.accent;
           ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
           pairs.push(i, j);
         }
@@ -423,7 +460,7 @@
           const d = Math.hypot(dx, dy);
           if (d < link * 1.35) {
             const k = 1 - d / (link * 1.35);
-            ctx.strokeStyle = `rgba(52,230,180,${(k * 0.75).toFixed(3)})`;
+            ctx.globalAlpha = k * 0.7; ctx.strokeStyle = C.light;
             ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke();
             if (dt) { a.x -= dx * 0.0009 * dt * 60; a.y -= dy * 0.0009 * dt * 60; }
           }
@@ -432,21 +469,16 @@
 
       for (const n of nodes) {
         if (n.hub) {
-          ctx.fillStyle = 'rgba(52,230,180,.14)';
-          ctx.beginPath(); ctx.arc(n.x, n.y, n.r * 4.2, 0, 6.2832); ctx.fill();
-          ctx.fillStyle = 'rgb(52,230,180)';
-          ctx.beginPath(); ctx.arc(n.x, n.y, n.r * 1.5, 0, 6.2832); ctx.fill();
+          dot(n.x, n.y, n.r * 4.2, C.accent, 0.18);
+          dot(n.x, n.y, n.r * 1.5, C.accent, 1);
         } else {
-          ctx.fillStyle = 'rgba(166,170,255,.75)';
-          ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, 6.2832); ctx.fill();
+          dot(n.x, n.y, n.r, C.node, 0.75);
         }
       }
 
       if (mouse.on) {
-        ctx.fillStyle = 'rgba(52,230,180,.18)';
-        ctx.beginPath(); ctx.arc(mouse.x, mouse.y, 14, 0, 6.2832); ctx.fill();
-        ctx.fillStyle = 'rgb(52,230,180)';
-        ctx.beginPath(); ctx.arc(mouse.x, mouse.y, 3, 0, 6.2832); ctx.fill();
+        dot(mouse.x, mouse.y, 14, C.light, 0.18);
+        dot(mouse.x, mouse.y, 3, C.light, 1);
       }
 
       // Paquets qui voyagent d'un nœud à un voisin
@@ -464,11 +496,10 @@
         if (p.t >= 1) { packets.splice(i, 1); continue; }
         const x = p.a.x + (p.b.x - p.a.x) * p.t;
         const y = p.a.y + (p.b.y - p.a.y) * p.t;
-        ctx.fillStyle = 'rgba(56,212,255,.22)';
-        ctx.beginPath(); ctx.arc(x, y, 7, 0, 6.2832); ctx.fill();
-        ctx.fillStyle = 'rgb(180,240,255)';
-        ctx.beginPath(); ctx.arc(x, y, 2.2, 0, 6.2832); ctx.fill();
+        dot(x, y, 7, C.accent, 0.3);
+        dot(x, y, 2.2, C.light, 1);
       }
+      ctx.globalAlpha = 1;
     }
 
     function frame(now) {

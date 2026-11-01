@@ -7,6 +7,7 @@
    - skills    : groupes de compétences
    - modules   : modules CFC
    - education / work : parcours
+   - certifications : badges et certificats (bloc dans Parcours)
 
    Les textes sont écrits en { fr: "…", en: "…" }.
    Pour ajouter un lien sur un projet :  links: [{ label: "Code", href: "https://…" }]
@@ -17,18 +18,18 @@ window.PORTFOLIO = {
   profile: {
     name: "Diogo Vala Alves",
     // L'adresse est assemblée par le script pour éviter les robots à spam.
-    emailUser: "diogovala",
-    emailDomain: "outlook.com",
+    emailUser: "contact",
+    emailDomain: "diogo-it.ch",
     // Laisse vide ("") pour masquer le bouton correspondant.
-    github: "",
+    github: "https://github.com/mje6435-star",
     linkedin: "",
-    cv: "",
+    cv: "assets/CV_Diogo_Vala_Alves.pdf",
   },
 
   /* ------------------------------------------------------------------ */
   ui: {
     fr: {
-      "meta.title": "Diogo Vala Alves — Portfolio",
+      "meta.title": "Diogo Vala Alves · Portfolio",
       "meta.description":
         "Portfolio de Diogo Vala Alves, apprenti informaticien CFC : domotique, réseau, serveurs, IA en local et scripts.",
       "skip": "Aller au contenu",
@@ -36,6 +37,7 @@ window.PORTFOLIO = {
       "nav.skills": "Compétences",
       "nav.path": "Parcours",
       "nav.about": "À propos",
+      "nav.cv": "CV",
       "nav.contact": "Contact",
       "nav.menu": "Menu",
       "nav.label": "Navigation principale",
@@ -44,7 +46,7 @@ window.PORTFOLIO = {
       "hero.badge": "Recherche un stage en informatique",
       "hero.title": "Je <span class=\"grad\">construis, j'héberge</span> et j'automatise.",
       "hero.sub":
-        "<strong>Diogo Vala Alves</strong> — apprenti informaticien CFC · exploitation &amp; infrastructure",
+        "<strong>Diogo Vala Alves × IA</strong>, apprenti informaticien CFC · exploitation &amp; infrastructure · site créé avec <a href=\"#certifications\">Claude Code</a>",
       "hero.cta1": "Voir mes projets",
       "hero.cta2": "Me contacter",
       "hero.stat.projects": "projets",
@@ -65,34 +67,39 @@ window.PORTFOLIO = {
       "modal.points": "Ce que j'ai fait",
       "modal.tools": "Outils & notions",
       "skills.title": "Compétences",
-      "skills.lead": "Ce que je pratique vraiment — pas une liste de mots à la mode.",
       "path.title": "Parcours",
       "path.education": "Formation",
       "path.work": "Stages",
       "path.modules": "Modules CFC",
-      "path.modules.lead":
-        "Les modules du CFC informaticien que j'ai suivis. Un point cyan signale ceux qui ont donné un projet présenté plus haut.",
+      "path.certs": "Certifications",
+      "cert.id": "ID de certification",
+      "cert.verify": "Vérifier le badge",
+      "cert.pdf": "Voir le PDF",
       "about.title": "À propos",
       "about.p1":
         "Apprenti informaticien CFC à l'École des Arches (Lausanne), je cherche un stage en <strong>exploitation et infrastructure</strong>. Ce qui me motive : comprendre comment une chose fonctionne de bout en bout, du câble réseau au service qui répond.",
       "about.p2":
-        "À la maison, je fais tourner Home Assistant, un serveur de photos, des modèles d'IA en local et un filtre publicitaire sur Raspberry Pi. Je documente ce que je fais — plans de test, documentation technique, journaux de travail — et je teste ce que j'installe, même quand un test échoue.",
+        "À la maison, je fais tourner Home Assistant, un serveur de photos, des modèles d'IA en local et un filtre publicitaire sur Raspberry Pi. Je documente ce que je fais (plans de test, documentation technique, journaux de travail) et je teste ce que j'installe, même quand un test échoue.",
       "about.interests": "Hors écran",
       "about.languages": "Langues",
+      "about.colon": " :",
       "contact.title": "Parlons-en",
       "contact.text":
-        "Je cherche un stage en informatique (exploitation et infrastructure). Une question, une opportunité ? Écris-moi, je réponds volontiers.",
+        "Je recherche une place de stage d'une année en informatique, dans le domaine de l'exploitation et de l'infrastructure, dans le cadre de mon CFC. Pour toute question ou opportunité, n'hésitez pas à me contacter.",
       "contact.mail": "Écrire un e-mail",
       "contact.copy": "Copier l'adresse",
       "contact.copied": "Adresse copiée !",
-      "contact.cv": "Télécharger mon CV",
+      "cv.title": "CV",
+      "cv.download": "Télécharger mon CV (PDF)",
+      "cv.open": "Ouvrir le CV",
+      "cv.frame": "CV de Diogo Vala Alves (PDF)",
       "contact.location": "Vaud, Suisse",
       "footer.rights": "© 2026 Diogo Vala Alves",
       "footer.top": "Haut de page",
       "noscript": "Ce site a besoin de JavaScript pour afficher les projets.",
     },
     en: {
-      "meta.title": "Diogo Vala Alves — Portfolio",
+      "meta.title": "Diogo Vala Alves · Portfolio",
       "meta.description":
         "Portfolio of Diogo Vala Alves, IT apprentice (CFC): home automation, networking, servers, local AI and scripting.",
       "skip": "Skip to content",
@@ -100,6 +107,7 @@ window.PORTFOLIO = {
       "nav.skills": "Skills",
       "nav.path": "Background",
       "nav.about": "About",
+      "nav.cv": "Resume",
       "nav.contact": "Contact",
       "nav.menu": "Menu",
       "nav.label": "Main navigation",
@@ -108,7 +116,7 @@ window.PORTFOLIO = {
       "hero.badge": "Looking for an IT internship",
       "hero.title": "I <span class=\"grad\">build, host</span> and automate.",
       "hero.sub":
-        "<strong>Diogo Vala Alves</strong> — IT apprentice (CFC) · operations &amp; infrastructure",
+        "<strong>Diogo Vala Alves × AI</strong>, IT apprentice (CFC) · operations &amp; infrastructure · site built with <a href=\"#certifications\">Claude Code</a>",
       "hero.cta1": "See my work",
       "hero.cta2": "Get in touch",
       "hero.stat.projects": "projects",
@@ -129,27 +137,32 @@ window.PORTFOLIO = {
       "modal.points": "What I did",
       "modal.tools": "Tools & concepts",
       "skills.title": "Skills",
-      "skills.lead": "What I actually use — not a buzzword list.",
       "path.title": "Background",
       "path.education": "Education",
       "path.work": "Work experience",
       "path.modules": "CFC modules",
-      "path.modules.lead":
-        "The modules of the IT apprenticeship (CFC) I have taken. A cyan dot marks those that led to a project shown above.",
+      "path.certs": "Certifications",
+      "cert.id": "Credential ID",
+      "cert.verify": "Verify badge",
+      "cert.pdf": "View PDF",
       "about.title": "About me",
       "about.p1":
         "I'm an IT apprentice (CFC) at École des Arches in Lausanne, looking for an internship in <strong>operations and infrastructure</strong>. What drives me is understanding how something works end to end, from the network cable to the service answering.",
       "about.p2":
-        "At home I run Home Assistant, a photo server, local AI models and an ad filter on a Raspberry Pi. I document what I do — test plans, technical documentation, work logs — and I test what I install, even when a test fails.",
+        "At home I run Home Assistant, a photo server, local AI models and an ad filter on a Raspberry Pi. I document what I do (test plans, technical documentation, work logs) and I test what I install, even when a test fails.",
       "about.interests": "Off screen",
       "about.languages": "Languages",
+      "about.colon": ":",
       "contact.title": "Let's talk",
       "contact.text":
-        "I'm looking for an IT internship (operations and infrastructure). A question, an opportunity? Drop me a line — I'm happy to reply.",
+        "I am looking for a one-year IT internship in operations and infrastructure as part of my CFC apprenticeship. Feel free to contact me with any questions or opportunities.",
       "contact.mail": "Send an email",
       "contact.copy": "Copy address",
       "contact.copied": "Address copied!",
-      "contact.cv": "Download my CV",
+      "cv.title": "Resume",
+      "cv.download": "Download my resume (PDF)",
+      "cv.open": "Open the resume",
+      "cv.frame": "Resume of Diogo Vala Alves (PDF)",
       "contact.location": "Vaud, Switzerland",
       "footer.rights": "© 2026 Diogo Vala Alves",
       "footer.top": "Back to top",
@@ -158,14 +171,11 @@ window.PORTFOLIO = {
   },
 
   /* ------------------------------------------------------------------ */
-  // Palette des couvertures : mint, blue, violet, amber, pink, cyan
   projects: [
     {
       id: "home-assistant",
       cat: "iot",
       icon: "home",
-      c1: "#34e6b4",
-      c2: "#5b8cff",
       meta: { fr: "Projet perso · en continu", en: "Personal · ongoing" },
       title: { fr: "Maison connectée sous Home Assistant", en: "Smart home with Home Assistant" },
       summary: {
@@ -190,8 +200,6 @@ window.PORTFOLIO = {
       id: "face-recognition",
       cat: "ai",
       icon: "scan",
-      c1: "#ff6bb5",
-      c2: "#a66bff",
       meta: { fr: "Projet perso", en: "Personal" },
       title: { fr: "Reconnaissance faciale sur caméras Tapo", en: "Face recognition on Tapo cameras" },
       summary: {
@@ -216,8 +224,6 @@ window.PORTFOLIO = {
       id: "local-ai",
       cat: "ai",
       icon: "cpu",
-      c1: "#a66bff",
-      c2: "#5b8cff",
       meta: { fr: "Projet perso", en: "Personal" },
       title: { fr: "IA en local : Ollama & LM Studio", en: "Local AI: Ollama & LM Studio" },
       summary: {
@@ -242,8 +248,6 @@ window.PORTFOLIO = {
       id: "network-test-plan",
       cat: "network",
       icon: "shield",
-      c1: "#5b8cff",
-      c2: "#38d4ff",
       meta: { fr: "Module 184 · binôme · sept. 2026", en: "Module 184 · pair work · Sept 2026" },
       title: { fr: "Plan de test d'un réseau d'entreprise", en: "Test plan for a company network" },
       summary: {
@@ -255,13 +259,13 @@ window.PORTFOLIO = {
           "Fonctionnalité (6 tests) : DHCP avec et sans réservation, DNS direct et inverse, serveur web IIS en HTTP et HTTPS.",
           "Performance (4 tests) : latence et chemin vers le serveur de fichiers et vers Internet (ping, tracert).",
           "Sécurité (6 tests) : scan de ports nmap, réseau invité, isolation des VLAN, liste blanche MAC, verrouillage de compte AD, droits sur un partage.",
-          "Pour chaque test : l'outil, les étapes et le résultat attendu — réutilisable après chaque modification du réseau.",
+          "Pour chaque test : l'outil, les étapes et le résultat attendu, réutilisable après chaque modification du réseau.",
         ],
         en: [
           "Functionality (6 tests): DHCP with and without reservation, forward and reverse DNS, IIS web server over HTTP and HTTPS.",
           "Performance (4 tests): latency and path to the file server and to the Internet (ping, tracert).",
           "Security (6 tests): nmap port scan, guest network, VLAN isolation, MAC whitelist, AD account lockout, share permissions.",
-          "Each test lists the tool, the steps and the expected result — reusable after every network change.",
+          "Each test lists the tool, the steps and the expected result, so it can be reused after every network change.",
         ],
       },
       tags: ["DHCP", "DNS", "IIS", "nmap", "VLAN", "Active Directory"],
@@ -270,8 +274,6 @@ window.PORTFOLIO = {
       id: "windows-server",
       cat: "systems",
       icon: "server",
-      c1: "#5b8cff",
-      c2: "#a66bff",
       meta: { fr: "Module 123 · labo", en: "Module 123 · lab" },
       title: { fr: "Windows Server 2025 & intranet d'entreprise", en: "Windows Server 2025 & company intranet" },
       summary: {
@@ -296,8 +298,6 @@ window.PORTFOLIO = {
       id: "adblock-pi",
       cat: "network",
       icon: "filter",
-      c1: "#34e6b4",
-      c2: "#38d4ff",
       meta: { fr: "Projet perso", en: "Personal" },
       title: { fr: "Filtre publicitaire réseau sur Raspberry Pi", en: "Network-wide ad filter on a Raspberry Pi" },
       summary: {
@@ -322,8 +322,6 @@ window.PORTFOLIO = {
       id: "weather-lorawan",
       cat: "iot",
       icon: "radio",
-      c1: "#38d4ff",
-      c2: "#34e6b4",
       meta: { fr: "Module 216 · examen", en: "Module 216 · exam" },
       title: { fr: "Station météo LoRaWAN (SenseCap S2120)", en: "LoRaWAN weather station (SenseCap S2120)" },
       summary: {
@@ -338,7 +336,7 @@ window.PORTFOLIO = {
           "5 scénarios d'automatisation et de test (pluie, vent à plus de 60 km/h, indice UV, précision de la température…).",
         ],
         en: [
-          "LoRaWAN on the EU868 band: low data rate (250 bps to 5.47 kbps), 10–15 km in rural areas, about 2 years of battery life.",
+          "LoRaWAN on the EU868 band: low data rate (250 bps to 5.47 kbps), 10 to 15 km in rural areas, about 2 years of battery life.",
           "Setup: batteries, Bluetooth, SenseCap Mate app, reading the measurements (temperature, humidity, wind, rain, UV, pressure).",
           "Security: end-to-end AES-128 encryption, but a default Bluetooth code of “000000” that should be changed.",
           "5 automation and test scenarios (rain, wind above 60 km/h, UV index, temperature accuracy…).",
@@ -350,13 +348,11 @@ window.PORTFOLIO = {
       id: "smart-bulb",
       cat: "iot",
       icon: "bulb",
-      c1: "#ffb454",
-      c2: "#ff6bb5",
       meta: { fr: "Module 216 · binôme · mai 2026", en: "Module 216 · pair work · May 2026" },
       title: { fr: "Ampoule connectée Matter ↔ Home Assistant", en: "Matter smart bulb ↔ Home Assistant" },
       summary: {
         fr: "Intégration d'une ampoule OSRAM SMART+ multicolore dans Home Assistant et série de tests fonctionnels, avec un échec documenté.",
-        en: "Integrating an OSRAM SMART+ colour bulb into Home Assistant, with a series of functional tests — including one documented failure.",
+        en: "Integrating an OSRAM SMART+ colour bulb into Home Assistant, with a series of functional tests, including one documented failure.",
       },
       points: {
         fr: [
@@ -378,8 +374,6 @@ window.PORTFOLIO = {
       id: "motion-alarm",
       cat: "iot",
       icon: "bell",
-      c1: "#ff6bb5",
-      c2: "#ffb454",
       meta: { fr: "Module 431 · binôme", en: "Module 431 · pair work" },
       title: { fr: "Alarme à détection de mouvement", en: "Motion-detection alarm" },
       summary: {
@@ -406,8 +400,6 @@ window.PORTFOLIO = {
       id: "virtualization-lab",
       cat: "systems",
       icon: "layers",
-      c1: "#a66bff",
-      c2: "#38d4ff",
       meta: { fr: "Module 190 · labo perso", en: "Module 190 · personal lab" },
       title: { fr: "Laboratoire de virtualisation", en: "Virtualisation lab" },
       summary: {
@@ -418,12 +410,12 @@ window.PORTFOLIO = {
         fr: [
           "VirtualBox et VMware avec Ubuntu, Windows 10, Windows Server 2025 et Home Assistant OS.",
           "Cisco Packet Tracer pour simuler et dessiner des réseaux.",
-          "Machines recréées à volonté depuis une ISO — c'est aussi pourquoi elles sont exclues de ma sauvegarde.",
+          "Machines recréées à volonté depuis une ISO : c'est aussi pourquoi elles sont exclues de ma sauvegarde.",
         ],
         en: [
           "VirtualBox and VMware running Ubuntu, Windows 10, Windows Server 2025 and Home Assistant OS.",
           "Cisco Packet Tracer to simulate and draw networks.",
-          "Machines rebuilt at will from an ISO — which is also why they are left out of my backup.",
+          "Machines rebuilt at will from an ISO, which is also why they are left out of my backup.",
         ],
       },
       tags: ["VirtualBox", "VMware", "Packet Tracer", "Windows Server", "Ubuntu"],
@@ -432,8 +424,6 @@ window.PORTFOLIO = {
       id: "backup-script",
       cat: "systems",
       icon: "backup",
-      c1: "#ffb454",
-      c2: "#34e6b4",
       meta: { fr: "Projet perso · PowerShell", en: "Personal · PowerShell" },
       title: { fr: "Script de sauvegarde automatisé", en: "Automated backup script" },
       summary: {
@@ -460,8 +450,6 @@ window.PORTFOLIO = {
       id: "photo-server",
       cat: "systems",
       icon: "image",
-      c1: "#38d4ff",
-      c2: "#5b8cff",
       meta: { fr: "Projet perso", en: "Personal" },
       title: { fr: "Serveur web de photos auto-hébergé", en: "Self-hosted photo web server" },
       summary: {
@@ -484,8 +472,6 @@ window.PORTFOLIO = {
       id: "linux-journey",
       cat: "systems",
       icon: "terminal",
-      c1: "#a66bff",
-      c2: "#34e6b4",
       meta: { fr: "Projet perso", en: "Personal" },
       title: { fr: "Mon parcours Linux : de Kali au dual boot", en: "My Linux journey: from Kali to dual boot" },
       summary: {
@@ -510,8 +496,6 @@ window.PORTFOLIO = {
       id: "hypnose-site",
       cat: "web",
       icon: "globe",
-      c1: "#ff6bb5",
-      c2: "#a66bff",
       meta: { fr: "Site vitrine", en: "Showcase website" },
       title: { fr: "Site vitrine : centre d'hypnothérapie", en: "Showcase site: hypnotherapy centre" },
       summary: {
@@ -536,12 +520,10 @@ window.PORTFOLIO = {
       id: "duel-app",
       cat: "web",
       icon: "trophy",
-      c1: "#ffb454",
-      c2: "#ff6bb5",
       meta: { fr: "Mini-application web", en: "Mini web app" },
-      title: { fr: "Duel d'ordinateurs — ton top 3", en: "Computer duels — your top 3" },
+      title: { fr: "Duel d'ordinateurs : votre top 3", en: "Computer duels: your top 3" },
       summary: {
-        fr: "Une mini-application qui oppose des ordinateurs deux à deux pour établir ton top 3.",
+        fr: "Une mini-application qui oppose des ordinateurs deux à deux pour établir votre top 3.",
         en: "A mini web app that pits computers against each other, two at a time, to build your top 3.",
       },
       points: {
@@ -640,16 +622,23 @@ window.PORTFOLIO = {
       place: { fr: "École des Arches, Lausanne", en: "École des Arches, Lausanne" },
     },
     {
-      period: { fr: "2022 – 2025", en: "2022 – 2025" },
-      title: { fr: "OCOM informatique", en: "OCOM IT option" },
-      place: { fr: "Collège de Montreux-Ouest, Montreux", en: "Collège de Montreux-Ouest, Montreux" },
+      period: { fr: "2022 → 2025", en: "2022 → 2025" },
+      title: {
+        fr: "Certificat de fin d'études secondaires (VG)",
+        en: "Secondary school leaving certificate (general track)",
+      },
+      place: { fr: "Collège de Montreux-Ouest, Clarens", en: "Collège de Montreux-Ouest, Clarens" },
+      points: {
+        fr: ["Option OCOM informatique · maths et français niveau 2"],
+        en: ["IT option (OCOM) · maths and French at the higher level (level 2)"],
+      },
     },
   ],
 
   work: [
     {
       period: { fr: "Mars 2024", en: "March 2024" },
-      title: { fr: "Stage — Aéroport de Sion (1 semaine)", en: "Internship — Sion Airport (1 week)" },
+      title: { fr: "Stage à l'Aéroport de Sion (1 semaine)", en: "Internship at Sion Airport (1 week)" },
       points: {
         fr: [
           "AIS : gestion des plans de vol et de l'assistance au sol",
@@ -667,11 +656,32 @@ window.PORTFOLIO = {
     },
     {
       period: { fr: "2023", en: "2023" },
-      title: { fr: "Stage — J. Fasero Sàrl (3 semaines)", en: "Internship — J. Fasero Sàrl (3 weeks)" },
+      title: { fr: "Stage chez J. Fasero Sàrl (3 semaines)", en: "Internship at J. Fasero Sàrl (3 weeks)" },
       points: {
         fr: ["Pose d'isolation thermique en toiture", "Montage de cloisons en plaques de plâtre", "Travaux de peinture intérieure"],
         en: ["Roof thermal insulation", "Plasterboard partition walls", "Interior painting"],
       },
+    },
+  ],
+
+  /* ------------------------------------------------------------------ */
+  // Titres officiels : ne pas les traduire. verify / file vides ("") = bouton masqué.
+  certifications: [
+    {
+      title: "Claude Academy: Claude Code 101",
+      issuer: "Anthropic",
+      date: { fr: "30 oct. 2026", en: "Oct 30, 2026" },
+      credentialId: "5ff8b0a6579eeec85c703b45d29fce8b",
+      verify: "https://academy.claude.com/verify/5ff8b0a6579eeec85c703b45d29fce8b",
+      file: "certificats/claude-academy-badge-claude-code-101.pdf",
+    },
+    {
+      title: "Claude Academy: Claude Code in action",
+      issuer: "Anthropic",
+      date: { fr: "30 oct. 2026", en: "Oct 30, 2026" },
+      credentialId: "3b741dcc958c6eec80b206bbad512980",
+      verify: "https://academy.claude.com/verify/3b741dcc958c6eec80b206bbad512980",
+      file: "certificats/claude-academy-badge-claude-code-in-action-1.pdf",
     },
   ],
 
@@ -688,7 +698,7 @@ window.PORTFOLIO = {
     { name: { fr: "Français", en: "French" }, level: { fr: "maternelle", en: "native" } },
     { name: { fr: "Portugais", en: "Portuguese" }, level: { fr: "maternelle", en: "native" } },
     { name: { fr: "Espagnol", en: "Spanish" }, level: { fr: "A2", en: "A2" } },
-    { name: { fr: "Anglais", en: "English" }, level: { fr: "niveau scolaire", en: "school level" } },
-    { name: { fr: "Allemand", en: "German" }, level: { fr: "niveau scolaire", en: "school level" } },
+    { name: { fr: "Anglais", en: "English" }, level: { fr: "A2", en: "A2" } },
+    { name: { fr: "Allemand", en: "German" }, level: { fr: "A1", en: "A1" } },
   ],
 };

@@ -48,6 +48,7 @@
     database: '<ellipse cx="12" cy="6" rx="7.5" ry="2.8"/><path d="M4.5 6v6c0 1.6 3.4 2.8 7.5 2.8s7.5-1.2 7.5-2.8V6M4.5 12v6c0 1.6 3.4 2.8 7.5 2.8s7.5-1.2 7.5-2.8v-6"/>',
     award: '<circle cx="12" cy="9" r="5.5"/><path d="m9.6 9 1.6 1.6 3.2-3.2"/><path d="m8.4 13.3-1.4 7.2 5-2.6 5 2.6-1.4-7.2"/>',
     chevron: '<path d="m6 9 6 6 6-6"/>',
+    linkedin: '<rect x="3.5" y="3.5" width="17" height="17" rx="3"/><path d="M8 10.5V16M8 7.8v.01M11.5 16v-5.5M11.5 13.2c0-1.6 1-2.7 2.4-2.7s2.1 1 2.1 2.7V16"/>',
   };
   const icon = (name, extra = '') =>
     `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" ${extra}>${ICONS[name] || ICONS.globe}</svg>`;
@@ -380,10 +381,15 @@
     $('a[href="#cv"]', nav).hidden = true;
   }
   // Le pseudo GitHub est repris de l'URL pour rester lisible : « GitHub · pseudo ».
+  // LinkedIn affiche son adresse courte (sans https://www.) avec son icône.
   const githubUser = (D.profile.github || '').split('/').filter(Boolean).pop();
-  const socials = [['GitHub · ' + githubUser, D.profile.github], ['LinkedIn', D.profile.linkedin]].filter(([, url]) => url);
+  const linkedinText = (D.profile.linkedin || '').replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
+  const socials = [
+    ['GitHub · ' + githubUser, D.profile.github, ''],
+    [linkedinText, D.profile.linkedin, 'linkedin'],
+  ].filter(([, url]) => url);
   el.social.innerHTML = socials
-    .map(([name, url]) => `<li><a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(name)}</a></li>`)
+    .map(([name, url, ico]) => `<li><a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${ico ? icon(ico) : ''}${esc(name)}</a></li>`)
     .join('');
 
   /* ------------------------------ Animation du hero ------------------------------ */

@@ -147,23 +147,36 @@ ul, ol { padding: 0; list-style: none; }
 .burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
 
 /* ------------------------------ Hero ------------------------------ */
-/* Dégradé vertical : marine derrière le titre, puis passage progressif vers le fond de page
-   (var(--bg), la couleur de la section suivante) sur les --hero-fade derniers pixels.
-   Pas de hauteur minimale : la position des boutons et des chiffres par rapport au dégradé reste fixe. */
+/* Dégradé vertical en deux parties qui se raccordent sans ligne :
+   - hero : marine derrière le titre, bleu sous les chiffres clés, puis éclaircissement dans la marge du bas
+     (--hero-fade : marge du bas, aussi lue par l'animation pour passer ses points en marine) ;
+   - section Projets (.section--from-hero) : reprend à la même couleur et finit sur le fond de page.
+   --hero-seam est à mi-chemin entre bleu et bleu pâle : la pente est la même de part et d'autre du raccord.
+   Pas de hauteur minimale : la position du contenu par rapport au dégradé reste fixe. */
+main { --hero-seam: color-mix(in srgb, var(--blue) 50%, var(--blue-pale)); }
 .hero {
-  --hero-fade: 340px;
+  --hero-fade: 88px;
   position: relative; isolation: isolate; overflow: hidden;
   display: grid; place-items: center;
-  padding: 72px 0 64px;
+  padding: 72px 0 var(--hero-fade);
   text-align: center;
   color: var(--white);
   background: linear-gradient(180deg,
     var(--navy) 0,
-    var(--navy) calc(100% - var(--hero-fade)),
-    var(--blue) calc(100% - var(--hero-fade) * .65),
-    var(--blue-light) calc(100% - var(--hero-fade) * .44),
-    var(--blue-pale) calc(100% - var(--hero-fade) * .26),
-    var(--bg) 100%);
+    var(--navy) calc(100% - var(--hero-fade) - 260px),
+    var(--blue) calc(100% - var(--hero-fade)),
+    var(--hero-seam) 100%);
+}
+/* Bleu pâle atteint juste au-dessus de la phrase d'intro, puis fond de page 170px plus bas.
+   Chevauchement de 1px : sur écran haute densité, la limite tombe sur un demi-pixel et laissait
+   apparaître le fond de page clair entre les deux sections. */
+.section--from-hero {
+  margin-top: -1px;
+  --pale-at: calc(var(--section-pad) + 20px);
+  background: linear-gradient(180deg,
+    var(--hero-seam) 0,
+    var(--blue-pale) var(--pale-at),
+    var(--bg) calc(var(--pale-at) + 170px));
 }
 .hero__canvas {
   position: absolute; inset: 0; z-index: -2;
@@ -197,19 +210,12 @@ ul, ol { padding: 0; list-style: none; }
 }
 .hero__sub { margin: 18px auto 0; color: var(--blue-pale); font-size: clamp(1.1rem, 2.6vw, 1.4rem); font-weight: 600; letter-spacing: .01em; }
 
-/* Les boutons passent sur la zone de transition : chacun a son propre fond pour rester lisible
-   sur le marine comme sur le clair (texte et bordure marine pour le bouton blanc). */
 .hero__cta { margin-top: 36px; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
-.hero .btn--primary { background: var(--white); border-color: var(--navy); color: var(--navy); }
-.hero .btn--primary:hover { background: var(--blue-pale); box-shadow: 0 10px 26px -10px color-mix(in srgb, var(--navy) 70%, transparent); }
-.hero .btn--ghost { background: var(--navy); border-color: var(--blue-light); color: var(--white); }
-.hero .btn--ghost:hover { background: var(--navy-dark); border-color: var(--navy-dark); }
-.hero .btn:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; box-shadow: 0 0 0 5px var(--white); }
 
-/* Chiffres clés : posés sur la partie claire du dégradé, donc en marine */
+/* Chiffres clés : encore sur la partie bleue du dégradé, donc en clair */
 .stats { margin-top: 40px; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 40px; }
-.stats li { display: flex; align-items: baseline; gap: 8px; color: var(--navy); font-size: .92rem; font-weight: 500; }
-.stats b { font-family: var(--mono); font-size: 1.5rem; font-weight: 600; color: var(--navy); }
+.stats li { display: flex; align-items: baseline; gap: 8px; color: var(--blue-pale); font-size: .92rem; font-weight: 500; }
+.stats b { font-family: var(--mono); font-size: 1.5rem; font-weight: 600; color: var(--white); }
 
 /* ----------------------------- Buttons ----------------------------- */
 .btn {
@@ -241,7 +247,7 @@ ul, ol { padding: 0; list-style: none; }
 .skill__icon svg, .cert__icon svg { width: 22px; height: 22px; }
 
 /* ---------------------------- Sections ---------------------------- */
-.section { padding: clamp(48px, 7vw, 80px) 0; }
+.section { --section-pad: clamp(48px, 7vw, 80px); padding: var(--section-pad) 0; }
 .section--alt { background: var(--white); border-block: 1px solid var(--blue-pale); }
 
 .section__head { margin-bottom: 28px; text-align: center; }
@@ -515,7 +521,8 @@ summary.cert__head:hover .cert__toggle { background: var(--navy); color: var(--w
   .nav.is-open { opacity: 1; transform: none; visibility: visible; }
   .nav a { padding: 12px 14px; font-size: 1.02rem; }
   .nav a.is-active::after { left: 14px; right: auto; width: 24px; bottom: 6px; }
-  .hero { padding: 52px 0 52px; }
+  .hero { --hero-fade: 72px; padding-top: 52px; }
+  .section--from-hero { --pale-at: calc(var(--section-pad) + 34px); } /* même pente qu'au-dessus du raccord */
   .stats { gap: 10px 28px; }
   .cert-list { grid-template-columns: 1fr; }
   .cv__frame { display: none; } /* aperçu PDF peu fiable sur mobile : « Ouvrir le CV » à la place */

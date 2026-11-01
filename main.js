@@ -39,16 +39,14 @@
     radio: '<circle cx="12" cy="12" r="1.8"/><path d="M8.2 8.2a5.4 5.4 0 0 0 0 7.6M15.8 8.2a5.4 5.4 0 0 1 0 7.6M5.3 5.3a9.5 9.5 0 0 0 0 13.4M18.7 5.3a9.5 9.5 0 0 1 0 13.4"/>',
     bulb: '<path d="M9.5 17.5h5M10.3 20.5h3.4"/><path d="M12 3.5a5.7 5.7 0 0 0-3.3 10.4c.7.5 1 1.2 1 2h4.6c0-.8.3-1.5 1-2A5.7 5.7 0 0 0 12 3.5z"/>',
     bell: '<path d="M6 16.5v-5a6 6 0 0 1 12 0v5l1.8 1.8H4.2L6 16.5z"/><path d="M10 21h4"/>',
-    layers: '<path d="m12 3.5 8.5 4.5-8.5 4.5L3.5 8 12 3.5z"/><path d="m3.5 12 8.5 4.5 8.5-4.5"/><path d="m3.5 16 8.5 4.5 8.5-4.5"/>',
-    backup: '<path d="M3.5 14 6 6.5A2 2 0 0 1 7.9 5h8.2A2 2 0 0 1 18 6.5l2.5 7.5"/><rect x="3.5" y="14" width="17" height="6" rx="1.8"/><path d="M7.5 17h.01M11 17h5.5"/>',
     image: '<rect x="3.5" y="4.5" width="17" height="15" rx="2.2"/><circle cx="9" cy="10" r="1.6"/><path d="m4 17 5-4.5 3.5 3 3-2.5 4.5 4"/>',
     terminal: '<rect x="3" y="4.5" width="18" height="15" rx="2.2"/><path d="m7 10 3 2.5L7 15M12.5 15.5H17"/>',
     globe: '<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.8 2.5 2.8 14.5 0 17M12 3.5c-2.8 2.5-2.8 14.5 0 17"/>',
-    trophy: '<path d="M8 4.5h8v5a4 4 0 0 1-8 0v-5z"/><path d="M8 6H4.5v1.5A3 3 0 0 0 8 10.5M16 6h3.5v1.5a3 3 0 0 1-3.5 3M12 13.5v4M8.5 20h7"/>',
     database: '<ellipse cx="12" cy="6" rx="7.5" ry="2.8"/><path d="M4.5 6v6c0 1.6 3.4 2.8 7.5 2.8s7.5-1.2 7.5-2.8V6M4.5 12v6c0 1.6 3.4 2.8 7.5 2.8s7.5-1.2 7.5-2.8v-6"/>',
     award: '<circle cx="12" cy="9" r="5.5"/><path d="m9.6 9 1.6 1.6 3.2-3.2"/><path d="m8.4 13.3-1.4 7.2 5-2.6 5 2.6-1.4-7.2"/>',
     chevron: '<path d="m6 9 6 6 6-6"/>',
     linkedin: '<rect x="3.5" y="3.5" width="17" height="17" rx="3"/><path d="M8 10.5V16M8 7.8v.01M11.5 16v-5.5M11.5 13.2c0-1.6 1-2.7 2.4-2.7s2.1 1 2.1 2.7V16"/>',
+    github: '<path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/>',
   };
   const icon = (name, extra = '') =>
     `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" ${extra}>${ICONS[name] || ICONS.globe}</svg>`;
@@ -381,11 +379,11 @@
     $('a[href="#cv"]', nav).hidden = true;
   }
   // Le pseudo GitHub est repris de l'URL pour rester lisible : « GitHub · pseudo ».
-  // LinkedIn affiche son adresse courte (sans https://www.) avec son icône.
+  // LinkedIn affiche son adresse courte (sans https://www.). Chaque lien a son icône.
   const githubUser = (D.profile.github || '').split('/').filter(Boolean).pop();
   const linkedinText = (D.profile.linkedin || '').replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
   const socials = [
-    ['GitHub · ' + githubUser, D.profile.github, ''],
+    ['GitHub · ' + githubUser, D.profile.github, 'github'],
     [linkedinText, D.profile.linkedin, 'linkedin'],
   ].filter(([, url]) => url);
   el.social.innerHTML = socials
@@ -414,12 +412,11 @@
       accent: color('--blue-light'), node: color('--blue-pale'), light: color('--white'),
       navy: color('--navy'), blue: color('--blue'),
     };
-    // Couleur selon la hauteur : claire sur le haut marine, marine léger sur le bas clair du dégradé (--hero-fade).
+    // Couleur selon la hauteur : claire sur le haut bleu, marine léger sur le bas clair du dégradé
+    // (le fond du hero passe à mi-chemin entre 38 % et 60 % de sa hauteur).
     const shade = (top, bottom) => {
-      const fade = parseFloat(getComputedStyle(hero).getPropertyValue('--hero-fade')) || 0;
-      const from = Math.max(0, 1 - (fade * 0.65) / h), to = Math.max(from, 1 - (fade * 0.35) / h);
       const g = ctx.createLinearGradient(0, 0, 0, h);
-      g.addColorStop(0, top); g.addColorStop(from, top); g.addColorStop(to, bottom); g.addColorStop(1, bottom);
+      g.addColorStop(0, top); g.addColorStop(0.38, top); g.addColorStop(0.6, bottom); g.addColorStop(1, bottom);
       return g;
     };
     let paint = { line: C.accent, node: C.node, hub: C.accent, light: C.light };

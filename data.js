@@ -209,12 +209,10 @@ window.PORTFOLIO = {
       points: {
         fr: [
           "Récupération du flux RTSP des caméras Tapo.",
-          "Détection puis reconnaissance faciale grâce à la vision par ordinateur.",
           "Une application concrète de l'IA sur du matériel grand public.",
         ],
         en: [
           "Pulling the RTSP stream from the Tapo cameras.",
-          "Face detection, then recognition, using computer vision.",
           "A hands-on use of AI on consumer hardware.",
         ],
       },
@@ -227,22 +225,20 @@ window.PORTFOLIO = {
       meta: { fr: "Projet perso", en: "Personal" },
       title: { fr: "IA en local : Ollama & LM Studio", en: "Local AI: Ollama & LM Studio" },
       summary: {
-        fr: "Un serveur maison qui exécute des modèles d'IA sans passer par le cloud, avec des bases MySQL à côté.",
-        en: "A home server running AI models without going through the cloud, with MySQL databases alongside.",
+        fr: "Un serveur maison qui exécute des modèles d'IA sans passer par le cloud.",
+        en: "A home server running AI models without going through the cloud.",
       },
       points: {
         fr: [
           "Modèles de langage exécutés en local avec Ollama et LM Studio.",
           "Serveur local pour héberger les modèles : mes requêtes restent sur ma machine.",
-          "Bases de données MySQL pour stocker et interroger des données.",
         ],
         en: [
           "Language models run locally with Ollama and LM Studio.",
           "A local server hosts the models: my prompts stay on my own machine.",
-          "MySQL databases to store and query data.",
         ],
       },
-      tags: ["Ollama", "LM Studio", "MySQL"],
+      tags: ["Ollama", "LM Studio"],
     },
     {
       id: "network-test-plan",
@@ -359,13 +355,11 @@ window.PORTFOLIO = {
           "Appairage en Matter par QR code, puis ajout dans Home Assistant exécuté sur une machine virtuelle.",
           "Tests : ambiances prédéfinies ✔, drapeau d'un pays ✔, synchro sur la musique ✔, alarme lumineuse à heure fixe ✘.",
           "Pistes d'automatisation : horaires, capteur de porte, température ambiante, store connecté.",
-          "Résultats consignés tels quels, y compris l'échec.",
         ],
         en: [
           "Pairing over Matter with a QR code, then adding it to Home Assistant running in a virtual machine.",
           "Tests: preset moods ✔, a country's flag ✔, syncing to music ✔, light alarm at a set time ✘.",
           "Automation ideas: schedules, door sensor, room temperature, smart blinds.",
-          "Results recorded as they were, failure included.",
         ],
       },
       tags: ["Matter", "Home Assistant", "OSRAM SMART+", { fr: "Tests", en: "Testing" }],
@@ -384,67 +378,15 @@ window.PORTFOLIO = {
         fr: [
           "Capteur de distance (TRIG / ECHO) et buzzer pilotés en Python via les broches GPIO.",
           "Alerte par e-mail (SMTP) avec la date et la distance mesurée.",
-          "Plusieurs versions successives du détecteur, de la V1 aux versions de test.",
           "Dossier complet : documentation technique, manuel utilisateur, planification Excel et journaux de travail.",
         ],
         en: [
           "Distance sensor (TRIG / ECHO) and buzzer driven from Python through the GPIO pins.",
           "Email alert (SMTP) with the date and the measured distance.",
-          "Several successive versions of the detector, from V1 to the test builds.",
           "Complete file: technical documentation, user manual, Excel planning and work logs.",
         ],
       },
       tags: ["Raspberry Pi", "Python", "GPIO", "SMTP"],
-    },
-    {
-      id: "virtualization-lab",
-      cat: "systems",
-      icon: "layers",
-      meta: { fr: "Module 190 · labo perso", en: "Module 190 · personal lab" },
-      title: { fr: "Laboratoire de virtualisation", en: "Virtualisation lab" },
-      summary: {
-        fr: "Un petit labo de machines virtuelles pour tester des systèmes et des services sans rien casser.",
-        en: "A small virtual machine lab to try out systems and services without breaking anything.",
-      },
-      points: {
-        fr: [
-          "VirtualBox et VMware avec Ubuntu, Windows 10, Windows Server 2025 et Home Assistant OS.",
-          "Cisco Packet Tracer pour simuler et dessiner des réseaux.",
-          "Machines recréées à volonté depuis une ISO : c'est aussi pourquoi elles sont exclues de ma sauvegarde.",
-        ],
-        en: [
-          "VirtualBox and VMware running Ubuntu, Windows 10, Windows Server 2025 and Home Assistant OS.",
-          "Cisco Packet Tracer to simulate and draw networks.",
-          "Machines rebuilt at will from an ISO, which is also why they are left out of my backup.",
-        ],
-      },
-      tags: ["VirtualBox", "VMware", "Packet Tracer", "Windows Server", "Ubuntu"],
-    },
-    {
-      id: "backup-script",
-      cat: "systems",
-      icon: "backup",
-      meta: { fr: "Projet perso · PowerShell", en: "Personal · PowerShell" },
-      title: { fr: "Script de sauvegarde automatisé", en: "Automated backup script" },
-      summary: {
-        fr: "Un script PowerShell qui sauvegarde mon PC vers un deuxième ordinateur du réseau via un partage SMB, avec journaux.",
-        en: "A PowerShell script that backs up my PC to a second computer on the network over an SMB share, with logs.",
-      },
-      points: {
-        fr: [
-          "Vérifie que le PC de sauvegarde répond avant de commencer, puis monte le partage réseau.",
-          "Copie Bureau, Documents, Images et Vidéos avec robocopy (sous-dossiers, reprise après coupure).",
-          "Exclut les machines virtuelles et images disque (~75 Go) qui se recréent depuis une ISO.",
-          "Journal horodaté à chaque exécution pour savoir ce qui a été copié ou ignoré.",
-        ],
-        en: [
-          "Checks that the backup PC is reachable before starting, then mounts the network share.",
-          "Copies Desktop, Documents, Pictures and Videos with robocopy (subfolders, resume after interruption).",
-          "Skips virtual machines and disk images (~75 GB) that can be rebuilt from an ISO.",
-          "Timestamped log on every run to see what was copied or skipped.",
-        ],
-      },
-      tags: ["PowerShell", "robocopy", "SMB", { fr: "Sauvegarde", en: "Backup" }],
     },
     {
       id: "photo-server",
@@ -467,78 +409,6 @@ window.PORTFOLIO = {
         ],
       },
       tags: [{ fr: "Auto-hébergement", en: "Self-hosting" }, { fr: "Serveur web", en: "Web server" }, { fr: "Réseau local", en: "LAN" }],
-    },
-    {
-      id: "linux-journey",
-      cat: "systems",
-      icon: "terminal",
-      meta: { fr: "Projet perso", en: "Personal" },
-      title: { fr: "Mon parcours Linux : de Kali au dual boot", en: "My Linux journey: from Kali to dual boot" },
-      summary: {
-        fr: "Une migration progressive de Windows vers Linux, étape par étape.",
-        en: "A gradual move from Windows to Linux, one step at a time.",
-      },
-      points: {
-        fr: [
-          "Découverte de Linux avec Kali, puis Ubuntu, en machine virtuelle.",
-          "Passage complet à Zorin OS.",
-          "Aujourd'hui : dual boot Windows / Linux Mint.",
-        ],
-        en: [
-          "First steps with Kali, then Ubuntu, in a virtual machine.",
-          "Full switch to Zorin OS.",
-          "Today: Windows / Linux Mint dual boot.",
-        ],
-      },
-      tags: ["Linux Mint", "Zorin OS", "Ubuntu", "Kali", "Dual boot"],
-    },
-    {
-      id: "hypnose-site",
-      cat: "web",
-      icon: "globe",
-      meta: { fr: "Site vitrine", en: "Showcase website" },
-      title: { fr: "Site vitrine : centre d'hypnothérapie", en: "Showcase site: hypnotherapy centre" },
-      summary: {
-        fr: "Site de deux pages (accueil et actualités) pour un centre d'hypnothérapie de Clarens-Montreux.",
-        en: "A two-page site (home and news) for a hypnotherapy centre in Clarens-Montreux.",
-      },
-      points: {
-        fr: [
-          "Page d'accueil et page d'actualités : conférences, stages et ateliers.",
-          "Balises SEO (titre, description) et icône intégrée directement au fichier.",
-          "HTML et CSS écrits à la main, sans framework.",
-        ],
-        en: [
-          "Home page and news page: talks, courses and workshops.",
-          "SEO tags (title, description) and the icon embedded directly in the file.",
-          "Hand-written HTML and CSS, no framework.",
-        ],
-      },
-      tags: ["HTML", "CSS", "SEO"],
-    },
-    {
-      id: "duel-app",
-      cat: "web",
-      icon: "trophy",
-      meta: { fr: "Mini-application web", en: "Mini web app" },
-      title: { fr: "Duel d'ordinateurs : votre top 3", en: "Computer duels: your top 3" },
-      summary: {
-        fr: "Une mini-application qui oppose des ordinateurs deux à deux pour établir votre top 3.",
-        en: "A mini web app that pits computers against each other, two at a time, to build your top 3.",
-      },
-      points: {
-        fr: [
-          "60 duels : on clique sur l'ordinateur qu'on préfère.",
-          "Navigation au clavier (flèches ← et →) et glissement de carte sur téléphone.",
-          "Récapitulatif des choix en fin de partie.",
-        ],
-        en: [
-          "60 duels: click the computer you prefer.",
-          "Keyboard navigation (← and → arrows) and card swiping on phones.",
-          "A recap of your choices at the end.",
-        ],
-      },
-      tags: ["HTML", "CSS", "JavaScript"],
     },
   ],
 
@@ -576,7 +446,6 @@ window.PORTFOLIO = {
         "Proxy",
         "SSH",
         "nmap",
-        "Kali Linux",
         { fr: "Lab pentest (Metasploitable2)", en: "Pentest lab (Metasploitable2)" },
         { fr: "RGPD / protection des données", en: "GDPR / data protection" },
       ],

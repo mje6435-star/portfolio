@@ -71,6 +71,8 @@ window.PORTFOLIO = {
       "path.certs": "Certifications",
       "cert.id": "ID de certification",
       "cert.learned": "Ce que j'ai appris",
+      "cert.criteria": "Critère d'obtention",
+      "cert.skills": "Compétences",
       "cert.verify": "Vérifier le badge",
       "cert.pdf": "Voir le PDF",
       "about.title": "À propos",
@@ -139,6 +141,8 @@ window.PORTFOLIO = {
       "path.certs": "Certifications",
       "cert.id": "Credential ID",
       "cert.learned": "What I learned",
+      "cert.criteria": "Earning criteria",
+      "cert.skills": "Skills",
       "cert.verify": "Verify badge",
       "cert.pdf": "View PDF",
       "about.title": "About me",
@@ -572,8 +576,28 @@ window.PORTFOLIO = {
   ],
 
   /* ------------------------------------------------------------------ */
-  // Titres officiels : ne pas les traduire. verify / file vides ("") = bouton masqué.
+  // Titres officiels : ne pas les traduire. verify / file vides ("") = bouton masqué,
+  // credentialId vide = ligne masquée. criteria et skills (facultatifs) s'affichent dans le dépliant.
   certifications: [
+    {
+      title: "AWS Cloud Quest: Cloud Practitioner - Training Badge",
+      issuer: "Amazon Web Services (AWS)",
+      date: { fr: "nov. 2026", en: "Nov 2026" },
+      credentialId: "",
+      // TODO : coller ici le lien du bouton « Afficher le diplôme » (page Credly du badge).
+      verify: "",
+      file: "",
+      learned: {
+        fr: "Les bases pour construire des solutions avec les services AWS et les concepts fondamentaux du cloud AWS, avec de la pratique sur les services de calcul, de réseau, de bases de données et de sécurité.",
+        en: "Building basic solutions with AWS services and the fundamental concepts of the AWS Cloud, with hands-on practice on compute, networking, database and security services.",
+      },
+      criteria: {
+        fr: "Réaliser toutes les missions de construction de solutions du rôle Cloud Practitioner dans AWS Cloud Quest.",
+        en: "Complete all solution building assignments aligned to the Cloud Practitioner role within AWS Cloud Quest.",
+      },
+      // Compétences officielles du badge (non traduites)
+      skills: ["AWS", "AWS Cloud", "AWS Cloud Computing", "AWS Cloud Foundations", "Amazon Web Services (AWS)", "Cloud Platform"],
+    },
     {
       title: "Claude Academy: Claude Code 101",
       issuer: "Anthropic",

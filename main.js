@@ -158,20 +158,28 @@
     el.certs.innerHTML = D.certifications
       .map((c) => {
         const actions = link(c.verify, 'cert.verify') + link(c.file, 'cert.pdf');
-        // En-tête cliquable (accordéon natif) qui ouvre « Ce que j'ai appris ».
+        // En-tête cliquable (accordéon natif) qui ouvre « Ce que j'ai appris »,
+        // puis le critère d'obtention et les compétences du badge s'ils sont renseignés.
         const head = `<span class="cert__icon">${icon('award')}</span>
               <span class="cert__name">${esc(c.title)}</span>
               <span class="cert__meta">${esc(c.issuer)} · ${esc(t(c.date))}</span>`;
+        const more = [
+          `<strong>${esc(tr('cert.learned'))}</strong><p>${esc(t(c.learned))}</p>`,
+          c.criteria ? `<strong>${esc(tr('cert.criteria'))}</strong><p>${esc(t(c.criteria))}</p>` : '',
+          c.skills?.length
+            ? `<strong>${esc(tr('cert.skills'))}</strong><ul class="cert__skills">${c.skills.map((s) => `<li>${esc(t(s))}</li>`).join('')}</ul>`
+            : '',
+        ].join('');
         return `<li class="panel cert">
           ${c.learned
             ? `<details class="cert__details">
             <summary class="cert__head">${head}
               <span class="cert__toggle" aria-hidden="true">${icon('chevron')}</span>
             </summary>
-            <div class="cert__learned"><strong>${esc(tr('cert.learned'))}</strong><p>${esc(t(c.learned))}</p></div>
+            <div class="cert__learned">${more}</div>
           </details>`
             : `<div class="cert__head">${head}</div>`}
-          <p class="cert__id">${esc(tr('cert.id'))} <code>${esc(c.credentialId)}</code></p>
+          ${c.credentialId ? `<p class="cert__id">${esc(tr('cert.id'))} <code>${esc(c.credentialId)}</code></p>` : ''}
           ${actions ? `<div class="cert__actions">${actions}</div>` : ''}
         </li>`;
       })
